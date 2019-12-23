@@ -9,6 +9,9 @@ public abstract class Movie {
     private Money fee;
     private List<DiscountCondition> discountConditions;
 
+    public List<DiscountCondition> getDiscountConditions() {
+        return discountConditions;
+    }
 
     public Movie(String title, Duration runningTime, Money fee, DiscountCondition... discountConditions) {
         this.title = title;
