@@ -14,6 +14,6 @@ public class Movie {
     }
 
     Money calculateFee(Screening screening, int count) {
-        return discountPolicy.calculateFee(screening, count,fee)
+        return discountPolicy.calculateFee(screening, count,fee);
     }
 }
