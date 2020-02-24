@@ -39,12 +39,14 @@ public class CompositeTask {
         return isComplete;
     }
 
-    public void addTask(String title, LocalDateTime date)
+    public CompositeTask addTask(String title, LocalDateTime date)
     {
-        list.add(new CompositeTask(title, date));
+        CompositeTask task = new CompositeTask(title, date);
+        list.add(task);
+        return task;
     }
 
-    public void removeTask(Task task) {
+    public void removeTask(CompositeTask task) {
         list.remove(task);
     }
 
