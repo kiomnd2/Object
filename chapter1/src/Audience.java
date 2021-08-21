@@ -27,6 +27,5 @@ public class Audience {
         가방 역시 audience에 의존적이므로 자율적인 존재로 바꾼다
         */
        return bag.hold(ticket);
-
     }
 }

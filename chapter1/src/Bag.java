@@ -8,6 +8,10 @@ public class Bag {
     private Ticket ticket;
 
 
+    /**
+     * 이벤트 당첨되지 않았을 때 초대장 없이 돈만 보관하는 경우, 생성자로 강제
+     * @param amount
+     */
     public Bag(long amount) {
         this (null,amount);
     }
@@ -30,11 +34,6 @@ public class Bag {
             return ticket.getFee();
         }
     }
-
-    //가방안에 초대장만 잇거나 , 돈만 잇거나 둘중 하나는 있도록 생성자로 강제
-
-
-
 
     //초대장 여부
     public boolean hasInvitation() {
