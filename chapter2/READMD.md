@@ -119,3 +119,5 @@ public class Movie {
 * 다음과 같이 요금을 계산하기 위해 DiscountPolicy 의 코드를 재사용한다. 
 * Movie 와 discountPolicy가 약하게 결합되어 유연성을 가진다
 * 이처럼 인터페이스에 정의된 메세지를 통해서 코드를 재사용하는 방법을 합성이라고 부른다
+
+![다이어그램2](ob_diagram2.png)
