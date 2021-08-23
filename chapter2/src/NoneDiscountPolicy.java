@@ -1,7 +1,6 @@
-public class NoneDiscountPolicy implements DiscountPolicy {
-
+public class NoneDiscountPolicy extends DiscountPolicy {
     @Override
-    public Money calculateDiscountAmount(Screening screening) {
+    protected Money getDiscountAmount(Screening screening) {
         return Money.ZERO;
     }
 }
