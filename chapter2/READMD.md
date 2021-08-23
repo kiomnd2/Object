@@ -38,7 +38,7 @@
     * 제목 (title)
     * 러닝타임 (runningTime)
     * 요금 (fee)
-    * 할인 정책 (discountPolicy)
+    * **할인 정책 (discountPolicy)**
     
     
 ## 할인 요금 구하기
@@ -76,6 +76,46 @@ public interface DiscountCondition {
 
 ## 상속과 다형성
  * 코드의 의존성과 실행시점의 의존성이 다를 수 있다.
- * 실제로 Movie 라는 객체가 AmountDiscountPolicy 라는 구체적으로 구현된 클래스를 직접접근 하기 보단 DiscountPolicy와 같이 인터페이스를 바라보게 
+ * 실제로 Movie 라는 객체가 AmountDiscountPolicy 와 같은 구체적으로 구현된 객체를 직접접근 하기 보단 DiscountPolicy와 같이 부모 클래스를 바라보게 
  설계 한다면 좀더 코드를 유연하고 쉽게 재사용 할 수 있다. ( 실행시점과 코드의 의존성이 달라진다 )
+ * DiscountCondition 라는 인터페이스 역시 마찬가지
  * 다만 실행시점과 코드의 의존성이 다르면 다를 수록 코드가 복잡해진다.
+
+## 유연한 설계
+~~~java
+public class Movie {
+    public Money calculateMovieFee(Screening screening) {
+        if (discountPolicy == null) return fee;
+        return fee.minus(discountPolicy.calculateDiscountAmount(screening));
+    }    
+}
+~~~
+* 할인 정책이 적용되어 있지 않은경우
+* 할인 금액을 0원이라는 사실을 결정하는 책임이 Movie 쪽에 존재함
+* 따라서 0원이라는 할인요금을 계산할 책임을 DiscountPolicy 계층에 유지해야함
+~~~java
+public class NoneDiscountPolicy extends DiscountPolicy {
+    protected Money getDiscountAmount(Screening screening) {
+        return Money.ZERO;
+    }
+}
+~~~
+* 다음과 같이, 기존 코드를 수정하지 않고 확장이 가능 (OpenClosed)
+
+## 상속 대신 합성
+* 상속은 캡슐화를 위반하며, 설계를 유연하지 못하게 한다.
+    * 부모 클래스의 구현이 자식 클래스에 노출됨 -> 의존성 발생 (부모 자식간의 의존성도 존재한다), 즉 부모가 바뀌면 자식도 바뀔 가능성이 크다
+    * 설계가 유연하지 않다. 상속은 부모 클래스와 자식 클래스 사이의 관계를 컴파일 시점에 결정 -> 실행 시점에 객체의 종류 변경 불가능 (유연성X)
+    
+~~~java
+public class Movie {
+    private DiscountPolicy discountPolicy;
+    
+    public void changeDiscountPolicy(DiscountPolicy discountPolicy) {
+        this.discountPolicy = discountPolicy; 
+    }
+}
+~~~
+* 다음과 같이 요금을 계산하기 위해 DiscountPolicy 의 코드를 재사용한다. 
+* Movie 와 discountPolicy가 약하게 결합되어 유연성을 가진다
+* 이처럼 인터페이스에 정의된 메세지를 통해서 코드를 재사용하는 방법을 합성이라고 부른다
