@@ -1,4 +1,4 @@
-public class Client implements Paper {
+public abstract class Client implements Paper {
 
     Library library = new Library("vueJS");
     Language language = new Language("kotlinJS");
@@ -8,13 +8,4 @@ public class Client implements Paper {
         this.programmer = programmer;
     }
 
-    @Override
-    public void setData(Programmer programmer) {
-        if(programmer instanceof FrontEnd)
-        {
-            FrontEnd frontEnd = (FrontEnd) programmer;
-            frontEnd.setLibrary(library);
-            frontEnd.setLanguage(language);
-        }
-    }
 }
